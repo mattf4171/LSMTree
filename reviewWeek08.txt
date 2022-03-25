@@ -1,0 +1,22 @@
+Week 02
+Programmer: <Matthew Fernandez>
+Partner: <Yuki Okamoto>
+How much time did your spend reviewing your partern's code:  <60 minutes> 
+
+The following is repeated for each item brought up at the review.
+
+Item Description: < In the buildIndex method you should pass "index" from global variable not create a new variable "index" > 
+Classification:   Code Error
+Resolution:  YES 
+
+Item Description: < LSMdisk lookup method should implement Tuple.deserialize(schema, byte_buffer), then return that Tuple if Tuple.deserialize(schema, byte_buffer).getKey == key> 
+Classification:   Code Error
+Resolution:  YES
+
+Item Description: < change bfile.readBlock(blockno, b); to bfile.readBlock(-blockno, b); in LSMindex method  >
+Classification: Code Error
+Resolution: YES
+
+Item Description: < In insertEntry method, use the put() like so buildBuffer.put(byte); after the if condition then use buildBuffer.putInt() with blockno as its argument  >
+Classification: Code Error
+Resolution: YES
