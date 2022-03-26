@@ -54,6 +54,7 @@ public class LSMindex {
 			ByteBuffer b = ByteBuffer.wrap(new  byte[heapdb.Constants.BLOCK_SIZE]);
 			bfile.readBlock(-blockno, b);
 			blockno =lookupInBlock(buildBuffer, key);
+			blockno =lookupInBlock(buildBuffer, key);  // should be lookupInBlock(b, key).
 		}
 		return blockno;
 	}
@@ -73,15 +74,16 @@ public class LSMindex {
 		//      BlockedFile.appendBlock -- write buffer to the end of the file.
 		//      ByteBuffer.putInt --  write a int value  to ByteBuffer
 		//      ByteBuffer.put -- write a byte[] to ByteBuffer
-		byte sKey [] = Tuple.serializeKey(key);
-		if (sKey.length > buildBuffer.remaining()) {
-			// not enough space in buffer.  write out buffer.
+		byte b [] = Tuple.serializeKey(key);
+		if(buildBuffer.remaining() >= b.length+4) {  
+			buildBuffer.put(b);   // if space remains in current buffer
+			buildBuffer.putInt(blockno);
+		} else {
 			bfile.appendBlock(buildBuffer);
-			clearBuffer(buildBuffer);			
+			clearBuffer(buildBuffer); // put b and blockno into an empty buffer
+			buildBuffer.put(b);
+			buildBuffer.putInt(blockno);
 		}
-		buildBuffer.put(sKey);
-		buildBuffer.putInt(blockno);
-		return;
 	}
 	
 	/**
