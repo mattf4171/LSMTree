@@ -73,11 +73,15 @@ public class LSMindex {
 		//      BlockedFile.appendBlock -- write buffer to the end of the file.
 		//      ByteBuffer.putInt --  write a int value  to ByteBuffer
 		//      ByteBuffer.put -- write a byte[] to ByteBuffer
-		byte b [] = Tuple.serializeKey(key);
-		if(buildBuffer.remaining() >= b.length+4) {
-			buildBuffer.put(b);
-			buildBuffer.putInt(blockno);
+		byte sKey [] = Tuple.serializeKey(key);
+		if (sKey.length > buildBuffer.remaining()) {
+			// not enough space in buffer.  write out buffer.
+			bfile.appendBlock(buildBuffer);
+			clearBuffer(buildBuffer);			
 		}
+		buildBuffer.put(sKey);
+		buildBuffer.putInt(blockno);
+		return;
 	}
 	
 	/**
