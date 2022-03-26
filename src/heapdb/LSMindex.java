@@ -43,11 +43,9 @@ public class LSMindex {
 	 * Index is a sparse index. 
 	 */
 	public int lookup(Object key) {
-		// TODO  complete this method
-		//   you may use "rootBuffer" as root node buffer.
 		//     The root node is read and kept in memory by the LSMindex constructor method.
-		//   use method "lookupInBlock" to search a buffer for a key value.
-		//    set buffer position to 8 before calling "lookupInBuffer"
+		//     use method "lookupInBlock" to search a buffer for a key value.
+		//     set buffer position to 8 before calling "lookupInBuffer"
 		rootBuffer.position(8);
 		int blockno = lookupInBlock(rootBuffer , key);
 		while(blockno<=0 && blockno != Integer.MIN_VALUE) {
@@ -65,12 +63,9 @@ public class LSMindex {
 	 * @param blockno is block number of data file
 	 */
 	public void insertEntry(Object key, int blockno) {
-		// TODO complete this method
-		// hints:
-		// use buildBuffer as the ByteBuffer.
-		// study and use methods 
+		//      use buildBuffer as the ByteBuffer.
 		//      clearBuffer -- this method is defined in this class.
-		//      Tuple.serializeKey -- convert a key value to a byte[].  You can then determine the key size in bytes. 
+		//      Tuple.serializeKey -- convert a key value to a byte[] -> the key size in bytes. 
 		//      BlockedFile.appendBlock -- write buffer to the end of the file.
 		//      ByteBuffer.putInt --  write a int value  to ByteBuffer
 		//      ByteBuffer.put -- write a byte[] to ByteBuffer
